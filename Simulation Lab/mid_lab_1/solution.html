@@ -34,16 +34,39 @@
             background-color: #04AA6D;
             color: black;
         }
+
+        body {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            gap: 10px;
+        }
+
+        .average {
+            height: 50vh;
+        }
     </style>
 </head>
 
 <body>
-
-    <table id="">
+    <table class="average">
+        <thead>
+            <tr>
+                <th>Head</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Body</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="solution">
         <thead id="table-head"></thead>
         <tbody id="table-body">
         </tbody>
     </table>
+
     <script>
         function customer() {
             return {
