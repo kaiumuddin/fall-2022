@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        const customerSize = 7;
+        const table = {
+            customerNo: Array(customerSize).fill(0),
+            randomIAT: Array(customerSize).fill(0),
+            IAT: Array(customerSize).fill(0),
+            arrivalTime: Array(customerSize).fill(0),
+            randomServiceTime: Array(customerSize).fill(0),
+            serviceTime: Array(customerSize).fill(0),
+        };
+
+        for (let i = 1;i < customerSize;i++) {
+            table.customerNo[i] = i;
+        }
+
+        for (let i = 1;i < customerSize;i++) {
+            table.randomIAT[i] = parseInt(Math.random() * 1000 + 1);
+        }
+
+        for (let i = 1;i < customerSize;i++) {
+            if (table.randomIAT[i] <= 125) {
+                table.IAT[i] = 1;
+            }
+            else if (table.randomIAT[i] <= 250) {
+                table.IAT[i] = 2;
+            }
+            else if (table.randomIAT[i] <= 375) {
+                table.IAT[i] = 3;
+            }
+            else if (table.randomIAT[i] <= 500) {
+                table.IAT[i] = 4;
+            }
+            else if (table.randomIAT[i] <= 625) {
+                table.IAT[i] = 5;
+            }
+            else if (table.randomIAT[i] <= 750) {
+                table.IAT[i] = 6;
+            }
+            else if (table.randomIAT[i] <= 875) {
+                table.IAT[i] = 7;
+            }
+            else if (table.randomIAT[i] <= 1000) {
+                table.IAT[i] = 8;
+            }
+        }
+
+        for (let i = 1;i < customerSize;i++) {
+            table.arrivalTime[i] = table.arrivalTime[i - 1] + table.IAT[i];
+        };
+
+        for (let i = 1;i < customerSize;i++) {
+            table.randomServiceTime[i] = parseInt(Math.random() * 100 + 1);
+        }
+
+
+        // =IF(E3 <= 10, 1, IF(E3 <= 30, 2, IF(E3 <= 60, 3, IF(E3 <= 85, 4, IF(E3 <= 95, 5, IF(E3 <= 100, 6))))));
+
+        for (let i = 1;i < customerSize;i++) {
+            if (table.randomServiceTime[i] <= 10) {
+                table.serviceTime[i] = 1;
+            }
+            else if (table.randomServiceTime[i] <= 30) {
+                table.serviceTime[i] = 2;
+            }
+            else if (table.randomServiceTime[i] <= 60) {
+                table.serviceTime[i] = 3;
+            }
+            else if (table.randomServiceTime[i] <= 85) {
+                table.serviceTime[i] = 4;
+            }
+            else if (table.randomServiceTime[i] <= 95) {
+                table.serviceTime[i] = 5;
+            }
+            else if (table.randomServiceTime[i] <= 100) {
+                table.serviceTime[i] = 6;
+            }
+
+        }
+
+        console.table(table);
+
+
+    </script>
+</body>
+
+</html>
