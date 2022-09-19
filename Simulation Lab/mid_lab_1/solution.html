@@ -36,28 +36,33 @@
         }
 
         body {
-            height: 100vh;
+            /* height: 100vh; */
             display: grid;
             grid-template-columns: 1fr 4fr;
             gap: 10px;
         }
 
         .average {
-            height: 50vh;
+            max-height: 50vh;
+            align-self: start;
+        }
+
+        .col-span-2 {
+            column-span: all;
         }
     </style>
 </head>
 
-<body>
+<body class="">
     <table class="average">
         <thead>
-            <tr>
-                <th>Head</th>
+            <tr class="">
+                <th colspan="2" class="col-span-2">Info</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Body</td>
+                <td>Customer Size : </td>
             </tr>
         </tbody>
     </table>
@@ -83,106 +88,110 @@
                 idle_time_of_server: 0,
             };
         }
-        const size = 20 + 1;
-        const customers = Array(size).fill().map(() => customer());
-        const tableHead = document.getElementById("table-head");
-        const tableBody = document.getElementById("table-body");
+
+        const load = (size) => {
+
+            size = size + 1;
+            const customers = Array(size).fill().map(() => customer());
+
+            const tableHead = document.getElementById("table-head");
+            const tableBody = document.getElementById("table-body");
 
 
-        for (let i = 1;i < customers.length;i++) {
-            {
-                // Random IAT
-                if (i > 1) {
-                    customers[i].random_iat = parseInt(Math.random() * 1000 + 1);
+            for (let i = 1;i < customers.length;i++) {
+                {
+                    // Random IAT
+                    if (i > 1) {
+                        customers[i].random_iat = parseInt(Math.random() * 1000 + 1);
+                    }
                 }
-            }
-            {
-                // IAT
-                // =IF(B4 <= 125, 1, IF(B4 <= 250, 2, IF(B4 <= 375, 3, IF(B4 <= 500, 4, IF(B4 <= 625, 5, IF(B4 <= 750, 6, IF(B4 <= 875, 7, IF(B4 <= 1000, 8))))))))
-                if (i === 1) {
-                    customers[i].iat = 0;
+                {
+                    // IAT
+                    // =IF(B4 <= 125, 1, IF(B4 <= 250, 2, IF(B4 <= 375, 3, IF(B4 <= 500, 4, IF(B4 <= 625, 5, IF(B4 <= 750, 6, IF(B4 <= 875, 7, IF(B4 <= 1000, 8))))))))
+                    if (i === 1) {
+                        customers[i].iat = 0;
+                    }
+                    else if (customers[i].random_iat <= 125) {
+                        customers[i].iat = 1;
+                    }
+                    else if (customers[i].random_iat <= 250) {
+                        customers[i].iat = 2;
+                    }
+                    else if (customers[i].random_iat <= 375) {
+                        customers[i].iat = 3;
+                    }
+                    else if (customers[i].random_iat <= 500) {
+                        customers[i].iat = 4;
+                    }
+                    else if (customers[i].random_iat <= 625) {
+                        customers[i].iat = 5;
+                    }
+                    else if (customers[i].random_iat <= 750) {
+                        customers[i].iat = 6;
+                    }
+                    else if (customers[i].random_iat <= 875) {
+                        customers[i].iat = 7;
+                    }
+                    else if (customers[i].random_iat <= 1000) {
+                        customers[i].iat = 8;
+                    }
                 }
-                else if (customers[i].random_iat <= 125) {
-                    customers[i].iat = 1;
+                {
+                    // Arrival Time
+                    if (i > 1) {
+                        customers[i].arrival_time = customers[i - 1].arrival_time + customers[i].iat;
+                    }
                 }
-                else if (customers[i].random_iat <= 250) {
-                    customers[i].iat = 2;
+                {
+                    // Random Service Time
+                    customers[i].random_service_time = parseInt(Math.random() * 100 + 1);
                 }
-                else if (customers[i].random_iat <= 375) {
-                    customers[i].iat = 3;
+                {
+                    // Service Time
+                    // =IF(E3 <= 10, 1, IF(E3 <= 30, 2, IF(E3 <= 60, 3, IF(E3 <= 85, 4, IF(E3 <= 95, 5, IF(E3 <= 100, 6))))))
+                    if (customers[i].random_service_time <= 10) {
+                        customers[i].service_time = 1;
+                    }
+                    else if (customers[i].random_service_time <= 30) {
+                        customers[i].service_time = 2;
+                    }
+                    else if (customers[i].random_service_time <= 60) {
+                        customers[i].service_time = 3;
+                    }
+                    else if (customers[i].random_service_time <= 85) {
+                        customers[i].service_time = 4;
+                    }
+                    else if (customers[i].random_service_time <= 95) {
+                        customers[i].service_time = 5;
+                    }
+                    else if (customers[i].random_service_time <= 100) {
+                        customers[i].service_time = 6;
+                    }
                 }
-                else if (customers[i].random_iat <= 500) {
-                    customers[i].iat = 4;
+                {
+                    // Time Service Begins
+                    customers[i].time_service_begin = Math.max(customers[i].arrival_time, customers[i - 1].time_service_ends);
                 }
-                else if (customers[i].random_iat <= 625) {
-                    customers[i].iat = 5;
+                {
+                    // Time Service Ends
+                    customers[i].time_service_ends = customers[i].time_service_begin + customers[i].service_time;
                 }
-                else if (customers[i].random_iat <= 750) {
-                    customers[i].iat = 6;
+                {
+                    // Waiting Time
+                    customers[i].waiting_time = customers[i].time_service_begin - customers[i].arrival_time;
                 }
-                else if (customers[i].random_iat <= 875) {
-                    customers[i].iat = 7;
+                {
+                    // Time Spent in System
+                    customers[i].time_spent_in_system = customers[i].time_service_ends - customers[i].arrival_time;
                 }
-                else if (customers[i].random_iat <= 1000) {
-                    customers[i].iat = 8;
+                {
+                    // Idle Time of Server
+                    customers[i].idle_time_of_server = customers[i].time_service_begin - customers[i - 1].time_service_ends;
                 }
-            }
-            {
-                // Arrival Time
-                if (i > 1) {
-                    customers[i].arrival_time = customers[i - 1].arrival_time + customers[i].iat;
-                }
-            }
-            {
-                // Random Service Time
-                customers[i].random_service_time = parseInt(Math.random() * 100 + 1);
-            }
-            {
-                // Service Time
-                // =IF(E3 <= 10, 1, IF(E3 <= 30, 2, IF(E3 <= 60, 3, IF(E3 <= 85, 4, IF(E3 <= 95, 5, IF(E3 <= 100, 6))))))
-                if (customers[i].random_service_time <= 10) {
-                    customers[i].service_time = 1;
-                }
-                else if (customers[i].random_service_time <= 30) {
-                    customers[i].service_time = 2;
-                }
-                else if (customers[i].random_service_time <= 60) {
-                    customers[i].service_time = 3;
-                }
-                else if (customers[i].random_service_time <= 85) {
-                    customers[i].service_time = 4;
-                }
-                else if (customers[i].random_service_time <= 95) {
-                    customers[i].service_time = 5;
-                }
-                else if (customers[i].random_service_time <= 100) {
-                    customers[i].service_time = 6;
-                }
-            }
-            {
-                // Time Service Begins
-                customers[i].time_service_begin = Math.max(customers[i].arrival_time, customers[i - 1].time_service_ends);
-            }
-            {
-                // Time Service Ends
-                customers[i].time_service_ends = customers[i].arrival_time + customers[i].service_time;
-            }
-            {
-                // Waiting Time
-                customers[i].waiting_time = customers[i].time_service_begin - customers[i].arrival_time;
-            }
-            {
-                // Time Spent in System
-                customers[i].time_spent_in_system = customers[i].time_service_ends - customers[i].arrival_time;
-            }
-            {
-                // Idle Time of Server
-                customers[i].idle_time_of_server = customers[i].time_service_begin - customers[i - 1].time_service_ends;
-            }
 
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
                 <td>${i}</td>
                 <td>${customers[i].random_iat}</td>
                 <td>${customers[i].iat}</td>
@@ -195,19 +204,29 @@
                 <td>${customers[i].time_spent_in_system}</td>
                 <td>${customers[i].idle_time_of_server}</td>
             `;
-            tableBody.appendChild(tr);
+                tableBody.appendChild(tr);
 
-        }
+            }
 
-        // console.table(customers);
+            // console.table(customers);
 
-        const keys = Object.keys(customer());
-        keys.forEach(e => {
-            const th = document.createElement('th');
-            th.innerText = e;
-            tableHead.appendChild(th);
-        })
+            const keys = Object.keys(customer());
+            keys.forEach(e => {
+                const th = document.createElement('th');
+                th.innerText = e;
+                tableHead.appendChild(th);
+            });
 
+        };
+
+
+        const getSize = () => {
+            const size = prompt("Enter Customer Size:");
+            load(parseInt(size));
+
+        };
+
+        getSize();
 
 
     </script>
