@@ -206,7 +206,9 @@
             `;
                 tableBody.appendChild(tr);
 
+                
             }
+            console.table(customers);
 
             // console.table(customers);
 
@@ -223,7 +225,6 @@
         const getSize = () => {
             const size = prompt("Enter Customer Size:");
             load(parseInt(size));
-
         };
 
         getSize();

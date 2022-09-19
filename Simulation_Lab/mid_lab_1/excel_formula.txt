@@ -6,3 +6,10 @@
 
 time service ends
 =G4+F4
+
+
+
+
+avg waiting time = total waiting time / total customer in queue
+
+prob = total koijn wait krce / customer size
