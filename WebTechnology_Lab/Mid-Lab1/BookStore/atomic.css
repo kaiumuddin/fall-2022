@@ -9,6 +9,18 @@
     display: flex;
 }
 
+.column {
+    flex-direction: column;
+}
+
+.grid {
+    display: grid;
+}
+
+.grid-column-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
 .wrap {
     flex-wrap: wrap;
 }
@@ -33,8 +45,20 @@
     width: 80vw;
 }
 
+.w-600 {
+    width: 600px;
+}
+
+.w-full {
+    width: 100%;
+}
+
 .h-8 {
     height: 32px;
+}
+
+.h-screen {
+    height: 100vh;
 }
 
 .m-5 {
@@ -197,6 +221,10 @@
 
 .text-center {
     text-align: center;
+}
+
+.text-end {
+    text-align: end;
 }
 
 .text-4xl {

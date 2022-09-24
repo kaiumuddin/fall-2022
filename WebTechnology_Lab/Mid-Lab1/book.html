@@ -11,19 +11,37 @@
 <body>
 	<script>
 
-		const url = `https://api.itbook.store/1.0/new`;
-
-		const showData = (data) => {
-			data.forEach(book => {
-				console.log(book.title);
-				console.log(book.image);
-				console.log();
-			});
-		};
+		const url = `https://api.itbook.store/1.0/search/html`;
 
 		fetch(url)
 			.then((res) => res.json())
 			.then((data) => showData(data.books));
+
+
+		const showData = (data) => {
+
+			let arr = "";
+
+			data.forEach(book => {
+				// console.log(book.title);
+				// console.log(book.image);
+				// console.log();
+
+				const newBook = `
+					<div class="py-15 bg-white rounded text-center">
+                		<img src="${book.image}" alt="This is a book">
+                		<h3>${book.title}</h3>
+                		<p class="my-10">Price: ${book.price}</p>
+                		<a class="no-underline bg-Sky-500 text-white px-10 py-5 rounded" href="">Buy Now</a>
+            		</div>
+				`;
+
+				arr += newBook;
+
+			});
+
+			console.log(arr);
+		};
 
 	</script>
 </body>
