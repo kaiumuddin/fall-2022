@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .node-container {
+            max-width: fit-content;
+            display: grid;
+            grid-template-columns: repeat(30, 1fr);
+            /* grid-template-rows: repeat(40, 1fr); */
+            gap: 0px;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .node {
+            height: 15px;
+            width: 15px;
+            /* background-color: aqua; */
+            border: 0.5px solid aqua;
+        }
+
+        .wall {
+            background-color: rgb(243, 120, 120);
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="node-container"></section>
+
+    <script>
+        const nodeContainer = document.getElementById("node-container");
+        nodeContainer.classList.add("node-container");
+
+        let mouseDown = false;
+        const arr = Array(900).fill(0);
+
+        document.addEventListener("mousedown", (e) => {
+            if (e.button == 0) {
+                console.log(e.type);
+                mouseDown = true;
+            }
+        });
+
+        document.addEventListener("mouseup", (e) => {
+            if (e.button == 0) {
+                console.log(e.type);
+                mouseDown = false;
+                console.log(arr);
+            }
+        });
+
+
+
+        for (let i = 0;i < 900;i++) {
+            const newNode = document.createElement("div");
+            newNode.classList.add("node");
+
+
+            newNode.addEventListener("mouseover", (e) => {
+                if (mouseDown) {
+                    e.target.classList.add("wall");
+                    console.log(e.type);
+                    arr[i] = 1;
+                }
+            });
+
+            nodeContainer.appendChild(newNode);
+        }
+    </script>
+</body>
+
+</html>

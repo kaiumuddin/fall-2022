@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        nav {
+            margin: 30px;
+        }
+
+        .container {
+            /* width: 800px; */
+            width: 1500px;
+            /* height: 800px; */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <input id="arrInput" type="number" value="30">
+            <button onclick="generate()">new array</button>
+            <button onclick="sort()">sort</button>
+        </nav>
+    </header>
+    <div class="container">
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        let arrSize = 0;
+        let numArr = [];
+        let bgArr = [];
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Bubble Sort',
+                    data: [],
+                    backgroundColor: [],
+                    borderColor: [
+                        'rgba(255, 99, 132, 0)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        });
+
+
+        const generate = () => {
+
+            arrSize = +document.getElementById("arrInput").value;
+
+            numArr = Array(arrSize).fill().map(e => parseInt(Math.random() * 230 + 26));
+            bgArr = numArr.map((e, i) => `rgba(${e}, 99, 132, 0.5)`);
+
+            myChart.data.datasets[0].data = numArr;
+            myChart.data.datasets[0].backgroundColor = bgArr;
+            myChart.data.labels = numArr;
+
+            myChart.update();
+            return;
+
+        };
+
+
+        const sleep = (milliseconds) => {
+            return new Promise(resolve => setTimeout(resolve, milliseconds));
+        };
+
+        const sort = async () => {
+
+            let len = numArr.length;
+            for (let i = 0;i < len;i++) { //you can also use "for in", so you don't need the variable "len"
+                let j = 0;
+                for (j = 0;j < len - i - 1;j++) {
+
+                    // myChart.data.datasets[0].backgroundColor[j] = 'rgba(0, 255, 00, 0.2)';
+
+                    if (numArr[j] > numArr[j + 1]) {
+
+                        [numArr[j], numArr[j + 1]] = [numArr[j + 1], numArr[j]]; // swap 2 number
+                        [myChart.data.datasets[0].backgroundColor[j], myChart.data.datasets[0].backgroundColor[j + 1]] =
+                            [myChart.data.datasets[0].backgroundColor[j + 1], myChart.data.datasets[0].backgroundColor[j]];
+
+                        myChart.data.datasets[0].data = numArr;
+                        await sleep(1);
+                        myChart.update();
+
+                        // myChart.data.datasets[0].backgroundColor = Array(size).fill().map(e => 'rgba(255, 99, 132, 0.2)');
+                    }
+
+
+                }
+
+
+            }
+
+            return;
+        };
+
+        generate();
+
+    </script>
+</body>
+
+</html>

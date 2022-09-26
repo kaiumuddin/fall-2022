@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        .container {
+            width: 500px;
+            margin: auto;
+        }
+
+        .btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 3px;
+        }
+
+        .btns button {
+            border-radius: 7px;
+            height: 40px;
+            border: 2px solid silver;
+        }
+
+        .display {
+            padding: 15px;
+            border-radius: 7px;
+            height: 50px;
+            border: 2px solid silver;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main">
+        <div class="container">
+            <div id="display" class="display">
+
+            </div>
+            <div class="btns">
+                <button onclick="setNumber(9)">9</button>
+                <button onclick="setNumber(8)">8</button>
+                <button onclick="setNumber(7)">7</button>
+                <button onclick="calculate('+')">+</button>
+                <button onclick="setNumber(6)">6</button>
+                <button onclick="setNumber(5)">5</button>
+                <button onclick="setNumber(4)">4</button>
+                <button onclick="calculate('-')">-</button>
+                <button onclick="setNumber(3)">3</button>
+                <button onclick="setNumber(2)">2</button>
+                <button onclick="setNumber(1)">1</button>
+                <button onclick="calculate('*')">*</button>
+                <button onclick="setNumber(0)">0</button>
+                <button onclick="calculate('/')">/</button>
+                <button onclick="calculate('%')">%</button>
+                <button onclick="calculate('=')">=</button>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        let arr = [];
+        const setNumber = (num) => {
+            const display = document.getElementById("display");
+            let text = display.innerHTML
+            text += num;
+            display.innerHTML = text;
+        }
+
+        let num1 = 0;
+        let num2 = 0;
+
+        const calculate = (op) => {
+
+            if (op === "=") {
+                // num2 = 
+            }
+            num1 = +document.getElementById("display").value;
+
+
+
+
+
+            if (op === "+") {
+
+            }
+            else if (op === "-") {
+
+            }
+            else if (op === "*") {
+
+            }
+            else if (op === "/") {
+
+            }
+            else if (op === "%") {
+
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
